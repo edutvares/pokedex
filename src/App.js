@@ -1,24 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import { useRef } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import GlobalStyle from "./globalStyles";
+
+// Pages
+import Home from "./pages/Home";
+import Details from "./pages/Details";
 
 function App() {
+  const detailsRef = useRef(null);
+  const homeRef = useRef(null);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <GlobalStyle />
+      <div className="App">
+        <Router>
+          <div>
+            <Switch>
+              <Route
+                path="/:pokemonId"
+                children={<Details ref={detailsRef} />}
+              />
+              <Route exact path="/">
+                <Home ref={homeRef} />
+              </Route>
+            </Switch>
+          </div>
+        </Router>
+      </div>
+    </>
   );
 }
 
